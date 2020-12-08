@@ -2,7 +2,7 @@
 
 echo "Welcome to the Employee wage computation"
 
-#UC6
+#UC8
 IS_PRESENT=1
 IS_ABSENT=0
 IS_PARTTIME=2
@@ -31,11 +31,14 @@ echo "$empHrs"
 }
 
 while [[ $totalEmpHrs -lt $MaxHrsInMonth && $totalWorkingDays -lt $NumWorkingDays ]]
-do
-        ((totalWorkingDays++))
-workingHrs="$( getWorkingHrs )"
-totalEmpHrs=$(($totalEmpHrs+$workingHrs))
+do     
+	((totalWorkingDays++))
+	workingHrs="$( getWorkingHrs )"
+	dailyWage=$(( $workingHrs*$empRatePerHr ))
+   dailyWageArray[$totalWorkingDays]=$dailyWage
+	totalEmpHrs=$(($totalEmpHrs+$workingHrs))
 done
 
 totalsalary=$(($totalEmpHrs*$empRatePerHr))
-
+echo "daily wages:"${dailyWageArray[@]}
+echo "total salary:"$totalsalary
