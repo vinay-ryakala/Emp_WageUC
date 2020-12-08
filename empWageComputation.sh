@@ -11,14 +11,16 @@ empRatePerHr=20
 
 attendanceCheck=$((RANDOM%3))
 
-if [ $attendanceCheck -eq 1 ]
-then
-	empHrs=8
-	salary=$(($empHrs*$empRatePerHr))
-elif [ $attendanceCheck -eq 2 ]
-then
-	empHrs=4
-	salary=$(($empHrs*$empRatePerHr))
-else
-salary=0
-fi
+case "$attendanceCheck" in
+	$IS_PRESENT)
+		empHrs=8
+		salary=$(($empHrs*$empRatePerHr))
+		;;
+	$IS_PARTTIME)
+		empHrs=4
+		salary=$(($empHrs*$empRatePerHr))
+		;;
+	*)
+		salary=0
+		;;
+esac
