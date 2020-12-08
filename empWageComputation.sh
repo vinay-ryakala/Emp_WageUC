@@ -2,7 +2,7 @@
 
 echo "Welcome to the Employee wage computation"
 
-#UC8
+#UC9
 IS_PRESENT=1
 IS_ABSENT=0
 IS_PARTTIME=2
@@ -12,6 +12,8 @@ MaxHrsInMonth=100
 
 totalEmpHrs=0
 totalWorkingDays=0
+
+declare -A dailyWageDIC
 
 function getWorkingHrs(){
 
@@ -35,10 +37,11 @@ do
 	((totalWorkingDays++))
 	workingHrs="$( getWorkingHrs )"
 	dailyWage=$(( $workingHrs*$empRatePerHr ))
-   dailyWageArray[$totalWorkingDays]=$dailyWage
+   dailyWageDIC["DAY"$totalWorkingDays]=$dailyWage
 	totalEmpHrs=$(($totalEmpHrs+$workingHrs))
 done
 
 totalsalary=$(($totalEmpHrs*$empRatePerHr))
-echo "daily wages:"${dailyWageArray[@]}
+echo "daily wages:"${dailyWageDIC[@]}
+echo "DAY:"${!dailyWageDIC[@]}
 echo "total salary:"$totalsalary
