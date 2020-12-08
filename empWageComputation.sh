@@ -13,22 +13,28 @@ MaxHrsInMonth=100
 totalEmpHrs=0
 totalWorkingDays=0
 
+function getWorkingHrs(){
+
+attendanceCheck=$((RANDOM%3))
+case "$attendanceCheck" in
+	$IS_PRESENT)
+		empHrs=8
+      ;;          
+	$IS_PARTTIME)
+		empHrs=4
+		;;
+	*)
+		empHrs=0
+      ;;
+esac
+echo "$empHrs"
+}
+
 while [[ $totalEmpHrs -lt $MaxHrsInMonth && $totalWorkingDays -lt $NumWorkingDays ]]
 do
         ((totalWorkingDays++))
-        attendanceCheck=$((RANDOM%3))
-        case "$attendanceCheck" in
-                $IS_PRESENT)
-                        empHrs=8
-                        ;;
-                $IS_PARTTIME)
-                        empHrs=4
-                        ;;
-                *)
-                        empHrs=0
-                        ;;
-        esac
-totalEmpHrs=$(($totalEmpHrs+$empHrs))
+workingHrs="$( getWorkingHrs )"
+totalEmpHrs=$(($totalEmpHrs+$workingHrs))
 done
 
 totalsalary=$(($totalEmpHrs*$empRatePerHr))
